@@ -3,7 +3,6 @@ from tkinter import messagebox
 from analytics import Analyzer
 from optimizer import Optimizer
 
-
 def run_timetable():
     subjects_input = entry_subjects.get()
     difficulties_input = entry_difficulties.get()
@@ -25,16 +24,18 @@ def run_timetable():
         messagebox.showerror("Error", "Subjects and difficulties count must match.")
         return
 
-    data = {"subjects": subjects, "difficulties": difficulties}
-    analyzer = Analyzer(data)
-    optimizer = Optimizer(analyzer)
+    analyzer = Analyzer(subjects, difficulties)
+    optimizer = Optimizer(analyzer, total_hours)   # ✅ FIXED
 
-    result = optimizer.run(total_hours)
+    result = optimizer.run()                       # ✅ FIXED
+
+    if result is None:
+        messagebox.showerror("Error", "Optimizer returned no data.")
+        return
 
     output_text.delete("1.0", tk.END)
     for subject, time in result.items():
         output_text.insert(tk.END, f"{subject}: {time:.2f} hours\n")
-
 
 root = tk.Tk()
 root.title("Study Timetable Generator")
@@ -45,7 +46,7 @@ tk.Label(root, text="Subjects (comma-separated):", font=("Arial", 11)).pack()
 entry_subjects = tk.Entry(root, width=50)
 entry_subjects.pack(pady=5)
 
-tk.Label(root, text="Difficulty (comma-separated, e.g. 5,3,2):", font=("Arial", 11)).pack()
+tk.Label(root, text="Difficulty (1-5 comma-separated):", font=("Arial", 11)).pack()
 entry_difficulties = tk.Entry(root, width=50)
 entry_difficulties.pack(pady=5)
 
@@ -53,7 +54,8 @@ tk.Label(root, text="Total Hours Available:", font=("Arial", 11)).pack()
 entry_hours = tk.Entry(root, width=20)
 entry_hours.pack(pady=5)
 
-tk.Button(root, text="Generate Timetable", command=run_timetable, width=25, height=2, bg="#4CAF50", fg="white").pack(pady=10)
+tk.Button(root, text="Generate Timetable", command=run_timetable,
+          width=25, height=2, bg="#4CAF50", fg="white").pack(pady=10)
 
 output_text = tk.Text(root, width=50, height=10, font=("Arial", 10))
 output_text.pack(pady=5)
