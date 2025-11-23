@@ -25,7 +25,6 @@ The idea is to avoid overthinking how to plan the day and just get a quick sched
 * **gui.py** → The main program with a small Tkinter window
 * **analytics.py** → Reads the subjects + difficulty
 * **optimizer.py** → Does the time calculation
-* **study_sessions.csv** (optional) → Not required anymore, but originally used for testing
 
 ## **How to run it**
 
@@ -70,4 +69,5 @@ It’s also very easy to modify if I want to add new features later.
   If a subject feels tough, give it a higher number.
 * You don’t need any CSV files or external tools.
 * This program is meant to be lightweight and student-friendly.
+
 
