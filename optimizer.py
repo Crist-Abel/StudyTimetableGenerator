@@ -1,4 +1,3 @@
-# optimizer.py
 import os
 print("OPTIMIZER FILE LOADED FROM:", os.path.abspath(__file__))
 
@@ -19,9 +18,10 @@ class Optimizer:
             allocated = (weight / total_weight) * total
             result[subject] = allocated
 
-        # (Optional) Print to console for debugging
+        
         print("\n----- YOUR STUDY TIMETABLE -----")
         for s, hours in result.items():
             print(f"{s}: {hours:.2f} hours")
 
-        return result   # <-- IMPORTANT: return the dict for the GUI
+        return result   
+
